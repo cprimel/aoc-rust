@@ -1,0 +1,6 @@
+# Builds, IDE settings, etc.
+target/
+.idea/
+
+# Inputs
+*.txt
