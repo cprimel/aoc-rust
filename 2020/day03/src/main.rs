@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{copy,BufRead, BufReader};
 
-fn count_trees_on_path(horizontal_move: usize, vertical_shift:usize, slope: &Vec<u8>) -> i32 {
+fn count_trees_on_path(horizontal_move: usize, vertical_shift:usize, slope: &[u8]) -> i32 {
     let mut tree_count = 0;
     let mut horizontal_pos = 1;
     let mut vertical_counter = vertical_shift;
@@ -13,7 +13,7 @@ fn count_trees_on_path(horizontal_move: usize, vertical_shift:usize, slope: &Vec
             let row_size = row_bytes.len();
 
             if horizontal_pos > row_size {
-                horizontal_pos = horizontal_pos - row_size;
+                horizontal_pos -= row_size;
             }
 
             if row_bytes[horizontal_pos - 1] == b'#' {
@@ -36,7 +36,11 @@ fn main() {
     let file = File::open(filename).unwrap();
     let mut reader = BufReader::new(file);
     let mut writer: Vec<u8> = vec![];
-    copy(&mut reader, &mut writer);
+    let result = copy(&mut reader, &mut writer);
+
+    if result.is_err() {
+        println!{"Error: {:?}",result };
+    }
 
     let mut result: i32 = 1;
 
