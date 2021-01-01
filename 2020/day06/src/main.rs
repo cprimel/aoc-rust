@@ -31,11 +31,8 @@ fn main() {
         } else {
             counter += 1;
             for c in line.as_bytes() {
-                let mut new_val = 1;
-                if answers.contains_key(c) {
-                    new_val += answers.get(c).unwrap();
-                }
-                answers.insert(*c, new_val);
+                let new_val = answers.entry(*c).or_insert(0);
+                *new_val += 1;
             }
         }
     }
